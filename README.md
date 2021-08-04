@@ -5,7 +5,7 @@
 云原生技术显然已成为当下技术发展的潮流，越来越多的机器学习任务跑在Kubernetes集群里。在云原生的架构体系中，计算与存储是分离的，样本数据一般存储在BOS等对象存储服务中，训练时需要读取远程OSS中样本文件。在大规模数据训练任务里，读取样本这个过程非常耗时，然而，一般来说用于模型训练集群机器都有比较大内存可用，如果能将训练样本缓存到本地的Page Cache中，并在后续调度训练任务时将训练任务分配到有缓存的节点，则能大大降低样本IO耗时，加快整个训练任务，目前市面上已有相应的解决方案，如[Fluid](https://github.com/fluid-cloudnative/fluid)等。
 
 ### JuiceFS概述
-![图片](http://bos.bj.bce-internal.sdns.baidu.com/agroup-bos-bj/bj-4d85eec0a4b6b4ac99c06ac0bf6575ea77d49653)
+![图片](./doc/JuiceFS架构图.png)
 
 
 ### 实验设计
@@ -201,13 +201,13 @@ JuiceFS 文件系统创建完成以后，接下来就可以把它挂载到操作
  - 样本数据：ImageNet train set 128,660
 
 实验一：无缓存，使用NVIDIA DALI的情况下，JuiceFS与BOS FS的对比实验
-![图片](http://bos.bj.bce-internal.sdns.baidu.com/agroup-bos-bj/bj-d68e107412ed36b6021d9d9ec5b20e1853c7f5b4)
+![图片](./doc/experiment-1.png)
 
 实验二：无缓存，不使用NVIDIA DALI的情况下，JuiceFS与BOS FS的对比实验
-![图片](http://bos.bj.bce-internal.sdns.baidu.com/agroup-bos-bj/bj-e84fe1cf95927cd119e7cec98fb174dcbd7981b9)
+![图片](./doc/experiment-2.png)
 
 实验三：缓存全部训练样本的情况下（缓存路径为`/dev/shm`），JuiceFS与BOS FS的对比实验
-![图片](http://bos.bj.bce-internal.sdns.baidu.com/agroup-bos-bj/bj-158698278a91c0ca6919c7a4084b90d243ff8c93)
+![图片](./doc/experiment-3.png)
 
 ### 结论
 
